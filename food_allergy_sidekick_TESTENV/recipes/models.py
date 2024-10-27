@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 class Recipe(models.Model):
     title = models.CharField(max_length=255)
+    # Add Category field
+    # Add measures field
+    # Add tags field
     ingredients = models.TextField()
     instructions = models.TextField()
     image = models.ImageField(upload_to='recipe_images/', blank=True, null=True, default='recipe_images/food_icon.jpg')

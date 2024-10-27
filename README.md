@@ -32,6 +32,7 @@ for recipe in KeyValueStore.objects.all():
 
 > 10/27/24
 - [x] Combined measures and ingredients into new model fields for easier integration into html view
+- [x] Pagination to home page recipes
 
 > 10/26/24
 
