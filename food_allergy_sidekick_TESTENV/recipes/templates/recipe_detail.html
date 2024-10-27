@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ recipe.title }}
+{% endblock %}
+
+{% block content %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.alternative-dropdown').one('click', function() { // Use 'one' to run only on first click
+            var ingredient = $(this).data('ingredient');
+            var dropdown = $(this); // Save reference to dropdown
+            console.log("Selected ingredient:", ingredient); // Debug log
+            $.ajax({
+                type: 'POST',
+                url: '{% url "run_script" %}',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    ingredient: ingredient
+                },
+                success: function(response) {
+                    console.log("AJAX success:", response); // Debug log
+                    dropdown.empty(); // Clear the dropdown options
+                    dropdown.append($('<option>', {
+                        value: "",
+                        text: "Select an option"
+                    })); // Add default option
+                    response.script_output.forEach(function(option) {
+                        dropdown.append($('<option>', {
+                            value: option,
+                            text: option
+                        }));
+                    });
+                },
+                error: function(response) {
+                    console.log('AJAX error:', response); // Debug log
+                    $('#response-message').text('Error: ' + response.responseJSON.message);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<!-- custom recipe model -->
+<!-- <hr>
+<h1>{{ recipe.title }}</h1>
+<hr>
+<h3>Recipe provided by: {{ recipe.user.username }}</h3>
+<p><strong>Ingredients:</strong></p>
+<ul>
+    {% for ingredient in ingredients %}
+        <li>
+            {{ ingredient }}
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                <option>Request Alternative</option>
+            </select>
+        </li>
+        {% endfor %}
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol>
+    {% for instruction in instructions %}
+        <li>{{ instruction }}</li>
+    {% endfor %}
+</ol>
+{% if recipe.image %}
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="150">
+{% endif %} -->
+
+
+<!-- KeyValueStore recipe model -->
+<hr>
+<h1>{{ recipe.strmeal }}</h1>
+<hr>
+{% if recipe.user.username %}
+    <h3>Recipe provided by: {{ recipe.user.username }}</h3>
+    {% else %}
+    <h3>Recipe provided by: Food Allergy Sidekick Team</h3>
+{% endif %}
+
+
+<!-- Ingredients Section -->
+<!-- <p><strong>Ingredients:</strong></p> -->
+<!-- Wrap in for loop when ingredients are combined -->
+<!-- <ul>
+    <li>
+        {{ recipe.stringredient1 }}
+        <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ recipe.stringredient1 }}">
+            <option>Request Alternative</option>
+        </select>
+    </li>
+</ul> -->
+<!-- <ul>
+    {% for ingredient in ingredients %}
+        <li>
+            {{ ingredient }}
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                <option>Request Alternative</option>
+            </select>        
+        </li>
+    {% endfor %}
+</ul> -->
+
+
+<!-- Ingredients and Measurements section -->
+<p><strong>Ingredients and Measurements:</strong></p>
+<table style="text-align: left;">
+    <thead>
+        <tr>
+            <th>Measurement</th>
+            <th>Ingredient</th>
+            <th>Alternative</th>   
+        </tr>
+    </thead>
+    <tbody>
+        {% for ingredient, measure in paired_ingredients %}
+            <tr>
+                <td>{{ measure }}</td>
+                <td>{{ ingredient }}</td>
+                <td>
+                    <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                        <option>Request Alternative</option>
+                    </select>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Instructions -->
+<p><strong>Instructions:</strong></p>
+<ol>
+    {% for instruction in instructions %}
+        <li>{{ instruction }}</li>
+    {% endfor %}
+</ol>
+
+
+<!-- Reciipe Image -->
+<img src="{{ image_url }}" alt="{{ recipe.strmeal }} image" width="250">
+{% endblock %}

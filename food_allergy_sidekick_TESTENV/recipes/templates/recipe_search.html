@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Recipes{% endblock %}
+
+{% block content %}
+<h1>Search Recipes</h1>
+
+<!-- custom recipe MOdel {{ recipe.title }} -->
+<!-- <form method="GET">
+    {{ form.as_p }}
+    <button type="submit">Search</button>
+</form>
+{% if results %}
+    <h2>Results:</h2>
+    <ul>
+        {% for recipe in results %}
+            <li>
+                <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a>
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
+{% endif %}     -->
+
+
+<!-- KeyValueStore Model -->
+<form method="GET">
+    {{ form.as_p }}
+    <button type="submit">Search</button>
+</form>
+{% if results %}
+    <h2>Results:</h2>
+    <ul>
+        {% for recipe in results %}
+            <li>
+                <!-- custom recipe {{ recipe.strmeal }} -->
+                <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a>
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
+{% endif %}    
+{% endblock %}

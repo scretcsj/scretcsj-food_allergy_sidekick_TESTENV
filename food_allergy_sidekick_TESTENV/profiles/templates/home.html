@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+
+<div>
+    <hr>
+    <h1>Welcome to Food Allergy Sidekick</h1>
+    <hr>
+    <h2>Search Recipes</h2>
+    <form method="GET" action=".">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <br>
+
+
+    <!-- Custom Recipe Model -->
+    <!-- <h2>All Recipes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Ingredients</th>
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+            <tr>
+                <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a></td>
+                <td>{{ recipe.ingredients|truncatechars:100 }}</td>
+                <td>{{ recipe.instructions|truncatechars:100 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> -->
+    
+
+    
+    <!-- KeyValueStore Model -->
+    <h2>All Recipes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>                
+                <th>Ingredients</th>
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+            <tr>
+                <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a></td>
+                <td>{{ recipe.strcategory }}</td>
+                <td>{{ recipe.ingredients }}</td>
+                <td>{{ recipe.strinstructions }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>      
+
+</div>
+{% endblock %}
