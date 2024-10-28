@@ -53,7 +53,7 @@
     
     <!-- KeyValueStore Model -->
     <h2>All Recipes</h2>
-    <div class="pagination">
+    <!-- <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; first</a>
@@ -69,7 +69,7 @@
                 <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
-    </div>   
+    </div>    -->
     <table>
         <thead>
             <tr>
@@ -80,7 +80,8 @@
             </tr>
         </thead>
         <tbody>
-            {% for recipe in page_obj %}
+            <!-- Use for recipe in page_obj -->
+            {% for recipe in recipes %}
                 <tr>
                     <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a></td>
                     <td>{{ recipe.strcategory }}</td>

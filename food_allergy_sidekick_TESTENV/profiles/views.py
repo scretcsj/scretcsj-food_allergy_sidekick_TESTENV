@@ -32,9 +32,9 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 def home(request):
     form = KeyValueStoreSearchForm()
     recipes = KeyValueStore.objects.all()
-    paginator = Paginator(recipes, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)    
+    # paginator = Paginator(recipes, 5)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)    
 
     if request.GET.get('query'):
             form = KeyValueStoreSearchForm(request.GET)
@@ -45,7 +45,7 @@ def home(request):
     return render(request, 'home.html', {
         'form': form,
         'recipes': recipes,
-        'page_obj': page_obj,
+        # 'page_obj': page_obj,
     })
 
 
