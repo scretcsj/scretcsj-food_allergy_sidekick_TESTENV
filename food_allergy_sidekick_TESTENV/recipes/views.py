@@ -62,40 +62,6 @@ def recipe_detail(request, pk):
     })
 
 
-# def recipe_detail(request, pk):
-#     recipe = get_object_or_404(KeyValueStore, pk=pk)
-#     # Join all stringredient cols into a allIngredients object. Then
-#     allIngredients = ingredients.join(
-#         recipe.stringredient1,
-#         recipe.stringredient2,
-#         recipe.stringredient3,
-#         recipe.stringredient4,
-#         recipe.stringredient5,
-#         recipe.stringredient6,
-#         recipe.stringredient7,
-#         recipe.stringredient8,
-#         recipe.stringredient9,
-#         recipe.stringredient10,
-#         recipe.stringredient11,
-#         recipe.stringredient12,
-#         recipe.stringredient13,
-#         recipe.stringredient14,
-#         recipe.stringredient15,
-#         recipe.stringredient16,
-#         recipe.stringredient17,
-#         recipe.stringredient18,
-#         recipe.stringredient19,
-#         recipe.stringredient20,
-#     )
-#     allIngredients = recipe.allIngredients.split('\n') if recipe.ingredients else []
-#     instructions = recipe.strinstructions.split('\r\n') if recipe.strinstructions else []
-#     return render(request, 'recipe_detail.html', {
-#         'recipe': recipe,
-#         'ingredients': ingredients,
-#         'instructions': instructions,
-#     })
-
-
 def search_recipes(request):
     if request.method == 'GET':
         form = KeyValueStoreSearchForm(request.GET)
@@ -109,6 +75,7 @@ def search_recipes(request):
 
 
 def run_script(request):
+    # Captures alternatives for each ingredient in a recipe
     if request.method == "POST":
         ingredient = request.POST.get('ingredient')
         script_output = subprocess.check_output(['python', 'scripts/Test.py', ingredient], text=True)

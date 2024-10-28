@@ -82,12 +82,10 @@ def signup(request):
 def view_profile(request):
     profile = request.user.userprofile
     form = UserProfileForm(instance=profile)
-    recipe_form = KeyValueStoreForm()
 
     return render(request, 'view_profile.html', {
         'profile': profile,
         'form': form,
-        'recipe_form': recipe_form
     })
 
 # Custom Recipe Model form
@@ -106,23 +104,6 @@ def view_profile(request):
 #     else:
 #         form = RecipeForm()
 #     return render(request, 'add_recipe.html', {'form': form})
-
-
-# KeyValueStore Model
-@login_required
-def add_recipe(request):
-    if request.method == 'POST':
-        form = KeyValueStoreForm(request.POST, request.FILES)
-        if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.save()
-            messages.success(request, 'Recipe added successfully!')
-            return redirect('recipe_detail', pk=recipe.pk)  
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = KeyValueStoreForm()
-    return render(request, 'add_recipe.html', {'form'})
 
 
 # @login_required
@@ -197,3 +178,21 @@ def change_password(request):
     else:
         form = PasswordChangeForm(user=request.user)
     return render(request, 'change_password.html', {'form': form})
+
+# KeyValueStore Model
+@login_required
+def add_recipe(request):
+    if request.method == 'POST':
+        form = KeyValueStoreForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.save()
+            messages.success(request, 'Recipe added successfully!')
+            return redirect('recipe_detail', pk=recipe.pk)  
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = KeyValueStoreForm()
+    return render(request, 'add_recipe.html', {
+        'form': form,
+        })

@@ -7,6 +7,7 @@
 <h1>Profile for {{ request.user.username }}</h1>
 <hr>
 <a href="{% url 'edit_profile' %}">Edit Profile</a>
+<a href="{% url 'add_recipe' %}">Add Recipe</a>
 <a href="{% url 'change_password' %}">Change Password</a>
 <h2>Personal Information</h2>
 <p>First Name: {{ request.user.first_name }}</p>
@@ -20,11 +21,5 @@
     {% endfor %}
 </ul>
 
-<h2>Add a New Recipe</h2>
-<form method="post" enctype="multipart/form-data" action="{% url 'add_recipe' %}">
-    {% csrf_token %}
-    {{ recipe_form.as_p }}
-    <button type="submit">Add Recipe</button>
-</form>
 </body>
 {% endblock %}
